@@ -3,9 +3,9 @@ const Joi = require('joi');
 const objectId = Joi.string().hex().length(24);
 const phone = Joi.string()
   .trim()
-  .pattern(/^[+0-9][0-9\s-]{6,19}$/)
+  .pattern(/^[0-9]{11}$/)
   .messages({
-    'string.pattern.base': 'phone must be a valid phone number',
+    'string.pattern.base': 'phone must be exactly 11 digits',
   });
 
 const optionalText = (max = 255) => Joi.string().trim().max(max).allow('', null);

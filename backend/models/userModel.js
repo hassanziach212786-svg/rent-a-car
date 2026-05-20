@@ -6,7 +6,14 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true, trim: true, minlength: 2, maxlength: 80 },
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },
     password: { type: String, required: true, minlength: 6 },
-    phone: { type: String, required: true, trim: true },
+    phone: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 11,
+      maxlength: 11,
+      match: [/^[0-9]{11}$/, 'Phone number must be exactly 11 digits'],
+    },
     role: {
       type: String,
       enum: ['customer', 'admin'],

@@ -27,6 +27,64 @@ const getStrength = (pw) => {
   return levels[score];
 };
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phonePattern = /^[0-9]{11}$/;
+
+const validateAuthForm = (form, isLogin) => {
+  const nextErrors = {};
+  const email = form.email.trim();
+  const password = form.password;
+
+  if (!email) {
+    nextErrors.email = 'Email is required';
+  } else if (!emailPattern.test(email)) {
+    nextErrors.email = 'Enter a valid email address';
+  }
+
+  if (!password) {
+    nextErrors.password = 'Password is required';
+  }
+
+  if (!isLogin) {
+    const name = form.name.trim();
+    const phone = form.phone.trim();
+
+    if (!name) {
+      nextErrors.name = 'Full name is required';
+    } else if (name.length < 2) {
+      nextErrors.name = 'Name must be at least 2 characters';
+    } else if (name.length > 80) {
+      nextErrors.name = 'Name must be 80 characters or less';
+    } else if (!/^[a-zA-Z\s.'-]+$/.test(name)) {
+      nextErrors.name = 'Name can only include letters, spaces, apostrophes, dots, and hyphens';
+    }
+
+    if (!phone) {
+      nextErrors.phone = 'Phone number is required';
+    } else if (!phonePattern.test(phone)) {
+      nextErrors.phone = 'Phone number must be exactly 11 digits';
+    }
+
+    if (!password) {
+      nextErrors.password = 'Password is required';
+    } else if (password.length < 6) {
+      nextErrors.password = 'Password must be at least 6 characters';
+    } else if (password.length > 72) {
+      nextErrors.password = 'Password must be 72 characters or less';
+    } else if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+      nextErrors.password = 'Password must include letters and numbers';
+    }
+
+    if (!form.confirm) {
+      nextErrors.confirm = 'Please confirm your password';
+    } else if (password !== form.confirm) {
+      nextErrors.confirm = 'Passwords do not match';
+    }
+  }
+
+  return nextErrors;
+};
+
 const Field = ({
   label,
   icon: Icon,
@@ -37,6 +95,8 @@ const Field = ({
   showEye,
   eyeOpen,
   onToggleEye,
+  error,
+  onBlur,
 }) => (
   <div>
     <label className="block text-[10px] font-bold text-gray-600 uppercase tracking-[0.15em] mb-2">
@@ -53,7 +113,11 @@ const Field = ({
         required
         value={value}
         onChange={onChange}
-        className="glass-input w-full pl-11 pr-10 text-sm"
+        onBlur={onBlur}
+        aria-invalid={Boolean(error)}
+        className={`glass-input w-full pl-11 pr-10 text-sm ${
+          error ? 'border-red-500/60 focus:border-red-400' : ''
+        }`}
       />
       {showEye && (
         <button
@@ -65,6 +129,7 @@ const Field = ({
         </button>
       )}
     </div>
+    {error && <p className="mt-1.5 text-xs text-red-400">{error}</p>}
   </div>
 );
 
@@ -73,24 +138,44 @@ const AuthPages = () => {
   const [loading, setLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
   const { login, register } = useAuth();
   const navigate = useNavigate();
 
-  const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
+  const set = (key) => (e) => {
+    const value = e.target.value;
+    setForm((prev) => {
+      const nextForm = { ...prev, [key]: value };
+      if (touched[key] || errors[key]) {
+        setErrors(validateAuthForm(nextForm, isLogin));
+      }
+      return nextForm;
+    });
+  };
+  const markTouched = (key) => () => {
+    setTouched((prev) => ({ ...prev, [key]: true }));
+    setErrors(validateAuthForm(form, isLogin));
+  };
   const strength = getStrength(form.password);
 
   const handle = async (e) => {
     e.preventDefault();
 
-    if (!isLogin) {
-      if (form.password.length < 6) return toast.error('Password must be at least 6 characters');
-      if (form.password !== form.confirm) return toast.error('Passwords do not match');
+    const nextErrors = validateAuthForm(form, isLogin);
+    setErrors(nextErrors);
+    setTouched({ name: true, email: true, phone: true, password: true, confirm: true });
+
+    if (Object.keys(nextErrors).length > 0) {
+      const firstError = Object.values(nextErrors)[0];
+      toast.error(firstError);
+      return;
     }
 
     setLoading(true);
     try {
       if (isLogin) {
-        const result = await login({ email: form.email, password: form.password });
+        const result = await login({ email: form.email.trim(), password: form.password });
         if (result.success) {
           toast.success('Welcome back!');
           navigate(result.role === 'admin' ? '/admin' : '/dashboard');
@@ -99,9 +184,9 @@ const AuthPages = () => {
         }
       } else {
         const result = await register({
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
+          name: form.name.trim(),
+          email: form.email.trim().toLowerCase(),
+          phone: form.phone.trim(),
           password: form.password,
         });
 
@@ -120,6 +205,8 @@ const AuthPages = () => {
   const switchMode = () => {
     setIsLogin((prev) => !prev);
     setForm({ name: '', email: '', phone: '', password: '', confirm: '' });
+    setErrors({});
+    setTouched({});
     setShowPw(false);
   };
 
@@ -128,12 +215,12 @@ const AuthPages = () => {
     : ['500+ verified vehicles', 'Book in under 2 minutes', 'Cancel anytime - no penalty'];
 
   return (
-    <div className="min-h-screen flex bg-[#0a0a0c]">
+    <div className="flex min-h-screen bg-[#0a0a0c] pt-24 lg:pt-0">
       <motion.div
         initial={{ opacity: 0, x: -24 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.55 }}
-        className="hidden lg:flex flex-col justify-between w-[42%] bg-surface-1 border-r border-white/[0.04] p-14 relative overflow-hidden"
+        className="relative hidden w-[42%] flex-col justify-between overflow-hidden border-r border-white/[0.05] bg-[#101017] p-14 pt-32 lg:flex"
       >
         <div className="absolute top-0 right-0 w-72 h-72 bg-blue-600/6 blur-[100px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-600/5 blur-[100px] rounded-full pointer-events-none" />
@@ -168,17 +255,17 @@ const AuthPages = () => {
           </div>
         </div>
 
-        <p className="relative text-gray-800 text-xs">&copy; {new Date().getFullYear()} DriveEase</p>
+        <p className="relative text-xs text-gray-700">&copy; {new Date().getFullYear()} DriveEase</p>
       </motion.div>
 
-      <div className="flex-1 flex items-center justify-center p-6 overflow-y-auto">
+      <div className="flex flex-1 items-start justify-center overflow-y-auto px-5 pb-12 pt-6 sm:px-6 lg:items-center lg:pt-28">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.08 }}
-          className="w-full max-w-md py-8"
+          className="w-full max-w-[460px] rounded-3xl border border-white/[0.06] bg-white/[0.025] p-6 shadow-[0_22px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl sm:p-8"
         >
-          <div className="lg:hidden flex items-center gap-2.5 mb-10">
+          <div className="mb-8 flex items-center gap-2.5 lg:hidden">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
               <Car size={15} className="text-white" />
             </div>
@@ -195,22 +282,22 @@ const AuthPages = () => {
               exit={{ opacity: 0, x: isLogin ? 12 : -12 }}
               transition={{ duration: 0.22 }}
             >
-              <h2 className="font-display font-bold text-3xl text-white mb-1">
+              <h2 className="font-display mb-1 text-3xl font-bold text-white">
                 {isLogin ? 'Welcome back' : 'Create account'}
               </h2>
-              <p className="text-gray-600 text-sm mb-8">
+              <p className="mb-7 text-sm text-gray-500">
                 {isLogin ? 'Sign in to access your dashboard' : 'Join DriveEase and start renting'}
               </p>
 
               <form onSubmit={handle} className="space-y-4">
                 {!isLogin && (
                   <>
-                    <Field label="Full Name" icon={User} placeholder="Ahmad Raza" value={form.name} onChange={set('name')} />
-                    <Field label="Phone Number" icon={Phone} placeholder="+92 3XX XXXXXXX" value={form.phone} onChange={set('phone')} type="tel" />
+                    <Field label="Full Name" icon={User} placeholder="Ahmad Raza" value={form.name} onChange={set('name')} onBlur={markTouched('name')} error={errors.name} />
+                    <Field label="Phone Number" icon={Phone} placeholder="03001234567" value={form.phone} onChange={set('phone')} onBlur={markTouched('phone')} error={errors.phone} type="tel" />
                   </>
                 )}
 
-                <Field label="Email Address" icon={Mail} placeholder="you@example.com" value={form.email} onChange={set('email')} type="email" />
+                <Field label="Email Address" icon={Mail} placeholder="you@example.com" value={form.email} onChange={set('email')} onBlur={markTouched('email')} error={errors.email} type="email" />
 
                 <div>
                   <Field
@@ -219,6 +306,8 @@ const AuthPages = () => {
                     placeholder={isLogin ? 'Password' : 'Min 6 characters'}
                     value={form.password}
                     onChange={set('password')}
+                    onBlur={markTouched('password')}
+                    error={errors.password}
                     showEye
                     eyeOpen={showPw}
                     onToggleEye={() => setShowPw((prev) => !prev)}
@@ -247,6 +336,8 @@ const AuthPages = () => {
                     placeholder="Repeat password"
                     value={form.confirm}
                     onChange={set('confirm')}
+                    onBlur={markTouched('confirm')}
+                    error={errors.confirm}
                     showEye
                     eyeOpen={showPw}
                     onToggleEye={() => setShowPw((prev) => !prev)}
@@ -261,7 +352,7 @@ const AuthPages = () => {
                   </div>
                 )}
 
-                <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.98 }} className="btn-primary w-full py-4 mt-2 group text-base">
+                <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.98 }} className="btn-primary group mt-3 w-full py-4 text-base">
                   {loading ? (
                     <Loader2 className="animate-spin" size={18} />
                   ) : (

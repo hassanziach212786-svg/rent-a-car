@@ -63,10 +63,15 @@ const OverviewTab = ({ onViewBookings }) => {
       {/* Stats */}
       <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 lg:grid-cols-4 lg:gap-4">
         {stats.map((s, i) => (
-          <motion.div key={i} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.07 }}
-            className={`glass-card p-5 border ${s.bg}`}>
-            <div className="flex items-start justify-between mb-3">
-              <p className="text-xs text-gray-600 font-medium">{s.label}</p>
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.07 }}
+            className={`rounded-2xl border bg-[#121218] p-5 shadow-[0_18px_55px_rgba(0,0,0,0.18)] ${s.bg}`}
+          >
+            <div className="mb-3 flex items-start justify-between">
+              <p className="text-xs font-semibold text-gray-600">{s.label}</p>
               <s.icon size={16} className={s.color} />
             </div>
             <p className={`font-display font-bold text-2xl ${s.color}`}>{loading ? '—' : s.val}</p>
@@ -75,7 +80,7 @@ const OverviewTab = ({ onViewBookings }) => {
       </div>
 
       {/* Recent bookings */}
-      <div className="glass-card overflow-hidden">
+      <div className="overflow-hidden rounded-2xl border border-white/[0.07] bg-[#121218] shadow-[0_18px_55px_rgba(0,0,0,0.18)]">
         <div className="flex flex-col gap-3 border-b border-white/[0.05] px-4 py-4 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between sm:px-6">
           <h3 className="font-bold text-white text-sm">Recent Bookings</h3>
           <button onClick={onViewBookings} className="text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors">
@@ -455,9 +460,9 @@ const UserDashboard = () => {
   const changeTab = (id) => { setTab(id); setSideOpen(false); };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       {/* Logo */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.05]">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-6 py-5">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
             <Car size={15} className="text-white" />
@@ -470,26 +475,31 @@ const UserDashboard = () => {
       </div>
 
       {/* User info */}
-      <div className="px-6 py-4 border-b border-white/[0.05]">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600/40 to-indigo-600/40 border border-blue-500/20 flex items-center justify-center text-blue-300 font-bold text-sm flex-shrink-0">
+      <div className="border-b border-white/[0.06] px-5 py-5">
+        <div className="rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+          <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-600/40 to-indigo-600/40 text-sm font-bold text-blue-300">
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
             <p className="text-sm font-bold text-white truncate">{user?.name}</p>
             <p className="text-[10px] text-gray-600 truncate">{user?.email}</p>
           </div>
+          </div>
+          <span className="mt-3 inline-flex items-center gap-1 rounded-full border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-blue-400">
+            <Shield size={9} /> Customer
+          </span>
         </div>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 p-4 space-y-1">
+      <nav className="flex-1 space-y-1 p-4">
         {MENU_ITEMS.map(({ id, label, Icon }) => (
           <button key={id} onClick={() => changeTab(id)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
               tab === id
-                ? 'bg-blue-600/10 text-white border border-blue-500/20'
-                : 'text-gray-500 hover:text-gray-200 hover:bg-white/5'
+                ? 'border border-blue-500/20 bg-blue-600 text-white shadow-lg shadow-blue-600/20'
+                : 'text-gray-500 hover:bg-white/[0.05] hover:text-white'
             }`}>
             <Icon size={16} className={tab === id ? 'text-blue-400' : 'text-gray-700'} />
             {label}
@@ -498,7 +508,7 @@ const UserDashboard = () => {
       </nav>
 
       {/* Logout */}
-      <div className="p-4 border-t border-white/[0.05]">
+      <div className="border-t border-white/[0.06] p-4">
         <button onClick={() => { logout(); }}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-500/10 transition-colors">
           <LogOut size={16} /> Sign Out
@@ -508,10 +518,11 @@ const UserDashboard = () => {
   );
 
   return (
-    <div className="flex h-screen bg-[#0a0a0c] overflow-hidden">
+    <div className="min-h-screen bg-[#09090b] px-3 pb-6 pt-24 sm:px-5">
+      <div className="mx-auto flex min-h-[calc(100vh-7.5rem)] max-w-[1480px] overflow-hidden rounded-3xl border border-white/[0.06] bg-[#0d0d11] shadow-[0_26px_90px_rgba(0,0,0,0.42)]">
 
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 bg-surface-1 border-r border-white/[0.04] flex-shrink-0">
+      <aside className="hidden w-64 flex-shrink-0 flex-col border-r border-white/[0.06] bg-[#101016] lg:flex">
         <SidebarContent />
       </aside>
 
@@ -525,7 +536,7 @@ const UserDashboard = () => {
             <motion.aside
               initial={{ x: -280 }} animate={{ x: 0 }} exit={{ x: -280 }}
               transition={{ type: 'spring', damping: 26, stiffness: 260 }}
-              className="fixed left-0 top-0 bottom-0 z-50 w-64 bg-surface-1 border-r border-white/[0.04] lg:hidden">
+              className="fixed bottom-0 left-0 top-0 z-50 w-64 border-r border-white/[0.06] bg-[#101016] lg:hidden">
               <SidebarContent />
             </motion.aside>
           </>
@@ -533,18 +544,19 @@ const UserDashboard = () => {
       </AnimatePresence>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex min-h-14 flex-shrink-0 items-center justify-between gap-3 border-b border-white/[0.04] bg-[#0a0a0c]/90 px-3 py-2 backdrop-blur sm:px-6">
+        <header className="flex flex-shrink-0 items-center justify-between gap-4 border-b border-white/[0.06] bg-[#0d0d11]/95 px-4 py-5 backdrop-blur sm:px-6 lg:px-8">
           <div className="flex items-center gap-3">
-            <button onClick={() => setSideOpen(true)} className="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-white/5 transition-colors">
+            <button onClick={() => setSideOpen(true)} className="rounded-xl p-2 text-gray-600 transition-colors hover:bg-white/5 lg:hidden">
               <Menu size={18} />
             </button>
             <div>
-              <p className="text-sm font-bold text-white capitalize">
+              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-blue-400">Customer Dashboard</p>
+              <h1 className="mt-1 text-2xl font-black text-white sm:text-3xl">
                 {MENU_ITEMS.find(m => m.id === tab)?.label || tab}
-              </p>
-              <p className="text-[10px] text-gray-700 hidden sm:block">
+              </h1>
+              <p className="mt-1 hidden text-sm text-gray-600 sm:block">
                 {new Date().toLocaleDateString('en-PK', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
               </p>
             </div>
@@ -555,7 +567,7 @@ const UserDashboard = () => {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+        <main className="flex-1 overflow-y-auto bg-[#09090b] p-4 sm:p-6 md:p-8">
           <AnimatePresence mode="wait">
             <motion.div key={tab}
               initial={{ opacity: 0, y: 10 }}
@@ -569,6 +581,7 @@ const UserDashboard = () => {
             </motion.div>
           </AnimatePresence>
         </main>
+      </div>
       </div>
     </div>
   );

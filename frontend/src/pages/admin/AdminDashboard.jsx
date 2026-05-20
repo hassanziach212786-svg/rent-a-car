@@ -325,7 +325,7 @@ const LocationForm = ({ initial, onSave, onClose, saving }) => {
 // ─── Main Dashboard ───────────────────────────────────────────────────────────
 
 const AdminDashboard = () => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const [tab, setTab] = useState('analytics');
 
   // Data
@@ -547,8 +547,8 @@ const AdminDashboard = () => {
   // ── Tab Components ─────────────────────────────────────────────────────────
 
   const AnalyticsTab = () => (
-    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
           { label: 'Total Revenue',   val: `Rs ${(stats?.totalRevenue || 0).toLocaleString()}`, Icon: DollarSign, color: 'blue',    bg: 'bg-blue-600/10',    text: 'text-blue-400'    },
           { label: 'Total Bookings',  val: stats?.totalBookings  || 0,                          Icon: Calendar,   color: 'purple',  bg: 'bg-purple-600/10',  text: 'text-purple-400'  },
@@ -560,8 +560,9 @@ const AdminDashboard = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.07 }}
-            className="bg-[#111114] border border-white/5 rounded-2xl p-6 flex items-center gap-4 hover:border-white/10 transition-colors"
+            className="group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#121218] p-6 shadow-[0_18px_55px_rgba(0,0,0,0.22)] transition-colors hover:border-white/15"
           >
+            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-white/[0.025] blur-xl transition group-hover:bg-white/[0.04]" />
             <div className={`w-12 h-12 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
               <s.Icon size={22} className={s.text} />
             </div>
@@ -574,14 +575,14 @@ const AdminDashboard = () => {
       </div>
 
       {/* Quick stats row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[
           { label: 'Pending Bookings',  val: stats?.pendingBookings  || 0, Icon: Clock,      cls: 'text-amber-400'   },
           { label: 'Confirmed Trips',   val: stats?.confirmedBookings || 0, Icon: TrendingUp, cls: 'text-blue-400'    },
           { label: 'Available Cars',    val: stats?.availableCars    || 0, Icon: Car,        cls: 'text-emerald-400' },
           { label: 'Active Drivers',    val: stats?.activeDrivers    || 0, Icon: Truck,      cls: 'text-purple-400'  },
         ].map((s, i) => (
-          <div key={i} className="bg-[#111114] border border-white/5 rounded-2xl p-5 flex items-center justify-between">
+          <div key={i} className="flex items-center justify-between rounded-2xl border border-white/[0.07] bg-[#121218] p-5 shadow-[0_18px_55px_rgba(0,0,0,0.18)]">
             <div>
               <p className="text-xs text-gray-600 font-bold uppercase tracking-widest">{s.label}</p>
               <p className="text-3xl font-bold text-white mt-1">{loading.stats ? '—' : s.val}</p>
@@ -991,23 +992,34 @@ const AdminDashboard = () => {
   // ── Render ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="flex h-screen overflow-hidden bg-[#0a0a0c] font-sans text-white">
+    <div className="min-h-screen bg-[#09090b] px-3 pb-6 pt-24 font-sans text-white sm:px-5">
+      <div className="mx-auto flex min-h-[calc(100vh-7.5rem)] max-w-[1680px] overflow-hidden rounded-3xl border border-white/[0.06] bg-[#0d0d11] shadow-[0_26px_90px_rgba(0,0,0,0.42)]">
 
       {/* Sidebar */}
-      <aside className="w-60 border-r border-white/[0.04] bg-[#0d0d0f] flex-shrink-0 hidden lg:flex flex-col p-5">
-        <div className="mb-8 flex items-center gap-2.5 px-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center font-bold text-sm shadow-lg">D</div>
-          <span className="text-lg font-bold tracking-tight">Admin<span className="text-blue-500">Panel</span></span>
+      <aside className="hidden w-64 flex-shrink-0 flex-col border-r border-white/[0.06] bg-[#101016] p-5 lg:flex">
+        <div className="mb-7 rounded-2xl border border-white/[0.06] bg-white/[0.025] p-4">
+          <div className="mb-4 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 text-sm font-black shadow-blue-glow-sm">
+              {user?.name?.[0]?.toUpperCase() || 'A'}
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-black text-white">{user?.name || 'Admin User'}</p>
+              <p className="truncate text-[11px] text-gray-600">{user?.email || 'admin account'}</p>
+            </div>
+          </div>
+          <span className="inline-flex rounded-full border border-red-500/20 bg-red-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-red-400">
+            Admin Account
+          </span>
         </div>
-        <nav className="flex-1 space-y-0.5">
+        <nav className="flex-1 space-y-1">
           {MENU.map(item => (
             <button
               key={item.id}
               onClick={() => setTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-xs font-bold uppercase tracking-wider ${
+              className={`flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-bold uppercase tracking-wider transition-all duration-200 ${
                 tab === item.id
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                  : 'text-gray-600 hover:text-white hover:bg-white/5'
+                  : 'text-gray-500 hover:bg-white/[0.05] hover:text-white'
               }`}
             >
               <item.Icon size={16} /> {item.label}
@@ -1016,20 +1028,42 @@ const AdminDashboard = () => {
         </nav>
         <button
           onClick={logout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-500 hover:bg-red-500/10 transition-all text-xs font-bold uppercase tracking-wider"
+          className="mt-4 flex items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-bold uppercase tracking-wider text-red-400 transition-all hover:bg-red-500/10"
         >
           <LogOut size={16} /> Logout
         </button>
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <div className="flex min-h-14 flex-shrink-0 items-center justify-between gap-3 border-b border-white/[0.04] bg-[#0a0a0c]/90 px-4 py-2 backdrop-blur sm:px-6">
-          <p className="text-sm font-bold capitalize text-white">{MENU.find(m => m.id === tab)?.label}</p>
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase bg-red-500/10 text-red-400">Admin Account</span>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex flex-shrink-0 flex-col gap-4 border-b border-white/[0.06] bg-[#0d0d11]/95 px-4 py-5 backdrop-blur sm:px-6 lg:px-8">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-blue-400">Control Center</p>
+              <h1 className="mt-1 text-2xl font-black text-white sm:text-3xl">
+                {MENU.find(m => m.id === tab)?.label}
+              </h1>
+              <p className="mt-1 text-sm text-gray-600">Manage bookings, fleet operations, people, and locations.</p>
+            </div>
+            <button
+              onClick={() => {
+                fetchStats();
+                if (tab === 'cars') fetchCars();
+                if (tab === 'bookings') fetchBookings();
+                if (tab === 'payments') fetchPayments();
+                if (tab === 'drivers') fetchDrivers();
+                if (tab === 'locations') fetchLocations();
+                if (tab === 'users') fetchUsers();
+              }}
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold text-gray-300 transition hover:border-white/20 hover:text-white"
+            >
+              <RefreshCw size={14} className={loading.stats ? 'animate-spin' : ''} />
+              Refresh
+            </button>
+          </div>
         </div>
 
-        <div className="border-b border-white/[0.04] bg-[#0a0a0c] px-3 py-3 lg:hidden">
+        <div className="border-b border-white/[0.06] bg-[#101016] px-3 py-3 lg:hidden">
           <div className="flex gap-2 overflow-x-auto">
             {MENU.map(item => (
               <button
@@ -1038,7 +1072,7 @@ const AdminDashboard = () => {
                 className={`flex min-w-max items-center gap-2 rounded-xl px-3 py-2 text-[11px] font-bold uppercase tracking-wider transition-all ${
                   tab === item.id
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20'
-                    : 'bg-white/[0.03] text-gray-500 hover:text-white'
+                    : 'bg-white/[0.04] text-gray-500 hover:text-white'
                 }`}
               >
                 <item.Icon size={14} /> {item.label}
@@ -1047,7 +1081,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+        <main className="flex-1 overflow-y-auto bg-[#09090b] p-4 sm:p-6 md:p-8">
           <AnimatePresence mode="wait">
             {tab === 'analytics' && <AnalyticsTab  key="analytics"  />}
             {tab === 'cars'      && <CarsTab        key="cars"       />}
@@ -1093,6 +1127,7 @@ const AdminDashboard = () => {
           <BookingDetailModal b={modal.data} />
         </Modal>
       )}
+      </div>
     </div>
   );
 };
