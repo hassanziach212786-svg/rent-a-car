@@ -10,6 +10,7 @@ const paymentSchema = new mongoose.Schema(
     amount: {
       type: Number,
       required: true,
+      min: 1,
     },
     payment_method: {
       type: String,
@@ -34,6 +35,7 @@ const paymentSchema = new mongoose.Schema(
       type: String,
       unique: true,
       required: true,
+      trim: true,
     },
   },
   { timestamps: true }

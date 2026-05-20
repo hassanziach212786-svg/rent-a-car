@@ -67,6 +67,7 @@ const updateDriver = asyncHandler(async (req, res) => {
 
   driver.name = req.body.name || driver.name;
   driver.phone = req.body.phone || driver.phone;
+  driver.license_number = req.body.license_number || driver.license_number;
   driver.location_id = req.body.location_id || driver.location_id;
 
   // Validate status before updating

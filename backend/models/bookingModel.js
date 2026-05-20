@@ -8,9 +8,9 @@ const bookingSchema = new mongoose.Schema({
   return_location_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: true },
   start_date: { type: Date, required: true },
   end_date: { type: Date, required: true },
-  rental_hours: { type: Number, default: 0 },
-  billed_days: { type: Number, default: 0 },
-  total_amount: { type: Number, required: true },
+  rental_hours: { type: Number, default: 0, min: 0 },
+  billed_days: { type: Number, default: 0, min: 0 },
+  total_amount: { type: Number, required: true, min: 0 },
   status: { 
   type: String, 
   enum: ['pending_payment', 'payment_submitted', 'confirmed', 'completed', 'cancelled'], 
