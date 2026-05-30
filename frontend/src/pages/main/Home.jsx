@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   CalendarCheck,
   CarFront,
-  CheckCircle,
-  Clock,
   CreditCard,
   Gauge,
   Headphones,
@@ -19,6 +17,7 @@ import {
 import { SearchPanel } from '../../components/shared/SearchPanel';
 import { CarCard } from '../../components/shared/Display';
 import { SkeletonCard } from '../../components/skeletons/Loaders';
+import heroSportsCar from '../../assets/hero/sports-car.png';
 import api from '../../api/axios';
 
 const fadeUp = (delay = 0) => ({
@@ -70,19 +69,175 @@ const categories = [
   },
 ];
 
-const perks = [
-  { icon: <ShieldCheck size={18} />, title: 'Verified cars', text: 'Every listing is checked before it reaches customers.' },
-  { icon: <CreditCard size={18} />, title: 'Simple pricing', text: 'Daily rates are easy to compare with no visual clutter.' },
-  { icon: <Headphones size={18} />, title: 'Helpful support', text: 'Friendly assistance for bookings, changes, and pickup questions.' },
-  { icon: <Gauge size={18} />, title: 'Ready to move', text: 'Clean interiors, maintained engines, and practical travel comfort.' },
-];
-
 const stats = [
   { label: 'Bookings handled', value: '10K+' },
   { label: 'Cars in fleet', value: '500+' },
   { label: 'City hubs', value: '15+' },
   { label: 'Support access', value: '24/7' },
 ];
+
+const typewriterPhrases = [
+  'Drive the classic standard.',
+  'Arrive in premium style.',
+  'Book luxury without delay.',
+];
+
+const ClassicHero = ({ onRent, onFleet }) => {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [typedText, setTypedText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const carX = useTransform(mouseX, [-1, 1], [-8, 14]);
+  const carY = useTransform(mouseY, [-1, 1], [5, -7]);
+  const glowX = useTransform(mouseX, [-1, 1], [-22, 22]);
+
+  const handlePointerMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    mouseX.set(((event.clientX - rect.left) / rect.width - 0.5) * 2);
+    mouseY.set(((event.clientY - rect.top) / rect.height - 0.5) * 2);
+  };
+
+  const resetPointer = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  useEffect(() => {
+    const phrase = typewriterPhrases[phraseIndex];
+    const isComplete = typedText === phrase;
+    const isEmpty = typedText === '';
+    const delay = isComplete && !isDeleting ? 1300 : isDeleting ? 34 : 58;
+
+    const timer = setTimeout(() => {
+      if (!isDeleting && isComplete) {
+        setIsDeleting(true);
+        return;
+      }
+
+      if (isDeleting && isEmpty) {
+        setIsDeleting(false);
+        setPhraseIndex((current) => (current + 1) % typewriterPhrases.length);
+        return;
+      }
+
+      const nextLength = typedText.length + (isDeleting ? -1 : 1);
+      setTypedText(phrase.slice(0, nextLength));
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [isDeleting, phraseIndex, typedText]);
+
+  return (
+    <section
+      onPointerMove={handlePointerMove}
+      onPointerLeave={resetPointer}
+      className="relative min-h-screen overflow-hidden bg-[#080807] px-4 pb-28 pt-24 text-white sm:px-6 sm:pt-28 lg:pb-24"
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_36%,rgba(216,184,117,0.22),transparent_31%),radial-gradient(circle_at_8%_76%,rgba(85,72,49,0.18),transparent_28%),linear-gradient(120deg,#12110f_0%,#090909_46%,#050505_100%)]" />
+      <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.13)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.13)_1px,transparent_1px)] [background-size:88px_88px]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d8b875]/55 to-transparent" />
+      <motion.div
+        style={{ x: glowX }}
+        className="absolute left-[70%] top-[22%] h-72 w-[58rem] -translate-x-1/2 rounded-full bg-[#d8b875]/14 blur-[105px]"
+      />
+      <div className="absolute bottom-0 left-1/2 h-44 w-[90%] -translate-x-1/2 rounded-full bg-black/85 blur-3xl" />
+
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-7xl items-center gap-10 lg:grid-cols-[0.86fr_1.14fr]">
+        <div className="relative z-30 max-w-2xl text-center lg:text-left">
+          <motion.div
+            {...fadeUp(0)}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#d8b875]/28 bg-white/[0.045] px-4 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#d8b875] shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:text-xs"
+          >
+            <Sparkles size={14} />
+            Classic premium rental
+          </motion.div>
+
+          <motion.div {...fadeUp(0.08)}>
+            <p className="mb-4 text-[11px] font-black uppercase tracking-[0.28em] text-white/42">
+              Luxury on demand
+            </p>
+            <div className="relative min-h-[14.5rem] min-[420px]:min-h-[16.5rem] sm:min-h-[19rem] lg:min-h-[21rem] xl:min-h-[22rem]">
+              <h1 className="font-display text-5xl font-bold leading-[0.9] tracking-normal text-white drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)] min-[420px]:text-6xl sm:text-7xl lg:text-[6.2rem]">
+                {typedText}
+                <motion.span
+                  className="ml-1 inline-block h-[0.8em] w-[0.06em] translate-y-[0.08em] rounded-full bg-[#d8b875]"
+                  animate={{ opacity: [1, 0, 1] }}
+                  transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut' }}
+                />
+              </h1>
+            </div>
+          </motion.div>
+
+          <motion.p
+            {...fadeUp(0.72)}
+            className="mx-auto mt-6 max-w-xl text-base leading-8 text-white/66 sm:text-lg lg:mx-0"
+          >
+            Premium cars, clear availability, and a calm booking experience built
+            for weddings, business trips, and city escapes.
+          </motion.p>
+
+          <motion.div {...fadeUp(0.9)} className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center lg:max-w-[470px]">
+            <button
+              onClick={onRent}
+              className="inline-flex min-h-14 flex-1 items-center justify-center gap-2 rounded-full bg-[#d8b875] px-6 py-3.5 text-sm font-black uppercase tracking-[0.14em] text-[#070707] shadow-[0_18px_55px_rgba(216,184,117,0.25)] transition hover:bg-[#efd28f] active:scale-[0.98]"
+            >
+              Rent Now
+              <ArrowRight size={15} />
+            </button>
+            <button
+              onClick={onFleet}
+              className="inline-flex min-h-14 flex-1 items-center justify-center rounded-full border border-white/14 bg-white/[0.055] px-6 py-3.5 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur-xl transition hover:bg-white/10 active:scale-[0.98]"
+            >
+              View Fleet
+            </button>
+          </motion.div>
+        </div>
+
+        <motion.div style={{ x: carX, y: carY }} className="relative z-20 w-full will-change-transform">
+          <div className="absolute left-[16%] right-[-4%] top-[49%] h-36 rounded-full bg-[#d8b875]/18 blur-[82px]" />
+          <div className="absolute left-[26%] right-[4%] top-[73%] h-20 rounded-full bg-black/85 blur-3xl" />
+          <motion.div
+            className="group relative z-10 ml-auto aspect-[3/2] w-full max-w-[850px] drop-shadow-[0_48px_100px_rgba(0,0,0,0.76)] lg:scale-110"
+            initial={{ opacity: 0, x: 80, scale: 0.94 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.95, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img
+              src={heroSportsCar}
+              alt="Luxury sports car"
+              className="relative z-10 h-full w-full object-contain"
+            />
+            <div className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute left-[2.5%] top-[55%] h-[7%] w-[10%] rotate-[25deg] rounded-full bg-white/95 blur-[3px] shadow-[0_0_18px_rgba(255,255,255,0.95),0_0_42px_rgba(216,184,117,0.82)]" />
+              <div className="absolute left-[47.5%] top-[55%] h-[8%] w-[21%] -rotate-[8deg] rounded-full bg-white/95 blur-[4px] shadow-[0_0_22px_rgba(255,255,255,0.98),0_0_58px_rgba(216,184,117,0.88)]" />
+              <div className="absolute left-[-3%] top-[51%] h-[18%] w-[28%] rotate-[10deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,255,255,0.5),rgba(216,184,117,0.24)_38%,transparent_72%)] blur-xl" />
+              <div className="absolute left-[45%] top-[49%] h-[18%] w-[36%] -rotate-[5deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,255,255,0.58),rgba(216,184,117,0.28)_42%,transparent_76%)] blur-xl" />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 22 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute bottom-[8%] left-1/2 z-20 grid w-[92%] max-w-xl -translate-x-1/2 grid-cols-3 gap-2 rounded-3xl border border-white/10 bg-[#11100d]/78 p-2 shadow-[0_24px_80px_rgba(0,0,0,0.44)] backdrop-blur-2xl sm:p-3 lg:left-[48%]"
+          >
+            {[
+              ['Fleet', '500+'],
+              ['Pickup', '15 cities'],
+              ['Booking', 'Instant'],
+            ].map(([label, value]) => (
+              <div key={label} className="rounded-2xl border border-white/8 bg-white/[0.045] px-3 py-3 text-center">
+                <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#d8b875] sm:text-[10px]">{label}</p>
+                <p className="mt-1 text-sm font-black text-white sm:text-lg">{value}</p>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 const Home = () => {
   const navigate = useNavigate();
@@ -116,125 +271,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#08090c] text-white">
-      <section className="relative min-h-[94vh] overflow-hidden bg-[#090a0d]">
-        <div className="absolute inset-0 bg-[linear-gradient(115deg,#08090c_0%,#101116_45%,#1c1711_100%)]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d8b875]/45 to-transparent" />
-        <div className="absolute left-0 top-20 h-[32rem] w-[32rem] rounded-full bg-[#d8b875]/10 blur-[130px]" />
-        <div className="absolute bottom-0 right-0 h-[30rem] w-[34rem] rounded-full bg-[#64748b]/10 blur-[140px]" />
-        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.18)_1px,transparent_1px)] [background-size:72px_72px]" />
+      <ClassicHero onRent={() => navigate('/signup')} onFleet={() => navigate('/cars')} />
 
-        <div className="container relative z-10 mx-auto grid min-h-[94vh] items-center gap-12 px-4 pb-24 pt-28 sm:px-6 sm:pb-28 sm:pt-32 lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="max-w-3xl">
-            <motion.div
-              {...fadeUp(0)}
-              className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[#d8b875]/28 bg-white/[0.06] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#d8b875] backdrop-blur-md sm:text-[11px] sm:tracking-[0.18em]"
-            >
-              <Sparkles size={13} />
-              Classic premium car rental
-            </motion.div>
-
-            <motion.h1
-              {...fadeUp(0.08)}
-              className="max-w-3xl font-display text-5xl font-bold leading-[0.98] text-white min-[380px]:text-6xl sm:text-7xl lg:text-8xl"
-            >
-              Rent the right car for every journey.
-            </motion.h1>
-
-            <motion.p
-              {...fadeUp(0.18)}
-              className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg"
-            >
-              Book polished sedans, roomy SUVs, and premium rides with clear
-              availability, simple pricing, and a smooth pickup experience.
-            </motion.p>
-
-            <motion.div {...fadeUp(0.28)} className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <button
-                onClick={() => navigate('/cars')}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d8b875] px-7 py-4 text-sm font-extrabold uppercase tracking-[0.13em] text-[#08090c] shadow-[0_18px_50px_rgba(216,184,117,0.22)] transition hover:bg-[#ecd08f] active:scale-[0.98]"
-              >
-                Browse cars
-                <ArrowRight size={16} />
-              </button>
-              <button
-                onClick={() => navigate('/login')}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/16 bg-white/[0.06] px-7 py-4 text-sm font-bold uppercase tracking-[0.13em] text-white backdrop-blur-md transition hover:bg-white/[0.1] active:scale-[0.98]"
-              >
-                Start booking
-              </button>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.38)} className="mt-10 flex flex-wrap gap-3 text-sm text-white/82">
-              {['Instant availability', 'Insured rentals', 'Flexible city pickup'].map((item) => (
-                <span key={item} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/28 px-4 py-2 backdrop-blur-md">
-                  <CheckCircle size={14} className="text-[#d8b875]" />
-                  {item}
-                </span>
-              ))}
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 28, scale: 0.98 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="relative hidden min-h-[560px] lg:block"
-          >
-            <div className="absolute left-[8%] top-[9%] h-[390px] w-[390px] rounded-full border border-[#d8b875]/18" />
-            <div className="absolute right-[4%] top-[3%] h-[460px] w-[460px] rounded-full border border-white/[0.07]" />
-            <div className="absolute left-[8%] right-[2%] top-[22%] h-[310px] -skew-y-6 rounded-[2rem] border border-white/[0.08] bg-white/[0.035] shadow-[0_40px_120px_rgba(0,0,0,0.38)] backdrop-blur-md" />
-            <motion.div
-              animate={{ backgroundPosition: ['0px 0px', '-180px 0px'] }}
-              transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
-              className="absolute bottom-[15%] left-[17%] right-[5%] h-24 -skew-y-3 rounded-full opacity-45 blur-[1px] [background-image:repeating-linear-gradient(90deg,transparent_0_34px,rgba(216,184,117,.34)_34px_72px,transparent_72px_118px)]"
-            />
-            <div className="absolute bottom-[11%] left-[12%] right-[8%] h-20 rounded-full bg-black/70 blur-3xl" />
-
-            <motion.img
-              animate={{ x: [0, 10, 0], y: [0, -5, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-              src="https://images.unsplash.com/photo-1555353540-64580b51c258?auto=format&fit=crop&q=88&w=1400"
-              alt="Premium rental car"
-              className="absolute right-[-4%] top-[18%] h-[360px] w-[88%] rounded-[1.75rem] object-cover shadow-[0_44px_90px_rgba(0,0,0,0.55)] [transform:perspective(1200px)_rotateY(-10deg)_rotateX(4deg)]"
-            />
-            <motion.div
-              animate={{ x: [0, 10, 0], y: [0, -5, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute right-[-4%] top-[18%] h-[360px] w-[88%] rounded-[1.75rem] bg-gradient-to-tr from-black/55 via-transparent to-[#d8b875]/12 [transform:perspective(1200px)_rotateY(-10deg)_rotateX(4deg)]"
-            />
-
-            <div className="absolute left-0 top-[18%] w-44 rounded-2xl border border-white/10 bg-[#0c0d11]/86 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl">
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#d8b875]/14 text-[#d8b875]">
-                <ShieldCheck size={18} />
-              </div>
-              <p className="text-sm font-extrabold text-white">Verified fleet</p>
-              <p className="mt-1 text-xs leading-5 text-white/55">Clean, checked, and ready before pickup.</p>
-            </div>
-
-            <div className="absolute bottom-[14%] right-[1%] w-56 rounded-2xl border border-white/10 bg-[#0c0d11]/88 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.36)] backdrop-blur-xl">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#d8b875]">Today</p>
-                  <p className="mt-1 text-lg font-black text-white">Ready to book</p>
-                </div>
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/[0.06] text-[#d8b875]">
-                  <CarFront size={20} />
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute bottom-[3%] left-[9%] grid w-[60%] grid-cols-3 gap-3">
-              {['Sedan', 'SUV', 'Premium'].map((type) => (
-                <div key={type} className="rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-3 text-center backdrop-blur">
-                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-white/78">{type}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <div className="relative z-20 -mt-20">
+      <div className="relative z-20 -mt-10">
         <SearchPanel onSearch={handleSearch} />
       </div>
 
@@ -369,7 +408,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
 
       <section className="bg-[#08090c] px-4 py-16 sm:px-6 sm:py-24">
         <motion.div
