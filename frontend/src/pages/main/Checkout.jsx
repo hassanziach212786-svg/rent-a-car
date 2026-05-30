@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { UploadCloud } from 'lucide-react';
+import { UploadCloud } from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import { Button } from '../../components/common/Buttons';
 import API from '../../api/axios';

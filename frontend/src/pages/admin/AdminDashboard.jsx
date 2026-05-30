@@ -6,7 +6,7 @@ import {
   XCircle, Plus, Edit2, Trash2, LogOut,
   DollarSign, MapPin, Truck, X, Save, Eye,
   TrendingUp, Clock, AlertCircle, RefreshCw, Flag,
-} from 'lucide-react';
+} from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';

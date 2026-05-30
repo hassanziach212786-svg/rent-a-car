@@ -1,4 +1,4 @@
-import { ExternalLink, MapPin } from 'lucide-react';
+import { ExternalLink, MapPin } from './BootstrapIcons';
 
 const getMapQuery = (location) => {
   if (!location) return '';

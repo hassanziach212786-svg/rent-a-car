@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Calendar, User, LogOut, Clock, CheckCircle2,
   XCircle, CreditCard, Car, Menu, X, MapPin, Star, AlertCircle,
   ChevronRight, TrendingUp, Edit2, Save, Phone, Mail, Shield,
-} from 'lucide-react';
+} from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';

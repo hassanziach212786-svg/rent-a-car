@@ -1,7 +1,7 @@
 // src/pages/main/BookingConfirm.jsx
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
-import { ChevronLeft, MapPin } from 'lucide-react';
+import { ChevronLeft, MapPin } from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import API from '../../api/axios';
 import { calculateRentalHours, toDateTimeLocalValue } from '../../utils/dateTime';

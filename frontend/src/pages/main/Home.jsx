@@ -15,7 +15,7 @@ import {
   ShieldCheck,
   Sparkles,
   Star,
-} from 'lucide-react';
+} from '../../components/shared/BootstrapIcons';
 import { SearchPanel } from '../../components/shared/SearchPanel';
 import { CarCard } from '../../components/shared/Display';
 import { SkeletonCard } from '../../components/skeletons/Loaders';
@@ -389,7 +389,7 @@ const Home = () => {
               <ArrowRight size={16} />
             </button>
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/signup')}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/18 px-7 py-4 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:bg-white/10 active:scale-[0.98]"
             >
               Create account

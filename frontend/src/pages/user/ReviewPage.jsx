@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Car, CheckCircle2, MessageSquare, Send, Star } from 'lucide-react';
+import { ArrowLeft, Car, CheckCircle2, MessageSquare, Send, Star } from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import API from '../../api/axios';
 

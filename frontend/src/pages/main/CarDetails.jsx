@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
-import { MapPin, Star, ChevronLeft } from 'lucide-react';
+import { MapPin, Star, ChevronLeft } from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';

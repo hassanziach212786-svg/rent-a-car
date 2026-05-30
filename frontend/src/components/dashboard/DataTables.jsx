@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Edit3, Trash2 } from 'lucide-react';
+import { Edit3, Trash2 } from '../shared/BootstrapIcons';
 
 export const DataTable = ({ columns, data, onEdit, onDelete }) => {
   return (

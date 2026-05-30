@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CarCard } from '../../components/shared/Display';
 import { SkeletonCard } from '../../components/skeletons/Loaders';
-import { SlidersHorizontal, Info, X, MapPin, Calendar } from 'lucide-react';
+import { SlidersHorizontal, Info, X, MapPin, Calendar } from '../../components/shared/BootstrapIcons';
 import API from '../../api/axios';
 import { formatDateTime } from '../../utils/dateTime';
 

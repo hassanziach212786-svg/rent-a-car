@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, User, Phone, ArrowRight, Loader2, Eye, EyeOff, Car } from 'lucide-react';
+import { Mail, Lock, User, Phone, ArrowRight, Loader2, Eye, EyeOff, Car } from '../../components/shared/BootstrapIcons';
 import { toast } from 'react-hot-toast';
 import { useAuth } from '../../context/AuthContext';
 
@@ -142,6 +142,14 @@ const AuthPages = ({mode='login'}) => {
   const [touched, setTouched] = useState({});
   const { login, register } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsLogin(mode === 'login');
+    setForm({ name: '', email: '', phone: '', password: '', confirm: '' });
+    setErrors({});
+    setTouched({});
+    setShowPw(false);
+  }, [mode]);
 
   const set = (key) => (e) => {
     const value = e.target.value;

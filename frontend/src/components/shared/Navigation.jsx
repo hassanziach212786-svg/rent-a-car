@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Car, Search, X, Menu, LogOut, LayoutDashboard, UserCircle } from 'lucide-react';
+import { Car, Search, X, Menu, LogOut, LayoutDashboard, UserCircle } from './BootstrapIcons';
 import { useAuth } from '../../context/AuthContext';
 
 const navLinkClass = ({ isActive }) =>
@@ -74,10 +74,6 @@ export const Navbar = () => {
               </>
             )}
           </NavLink>
-           
-<Link to="/signup" className="btn-primary">
-  Sign Up
-</Link>
           {user ? (
             <div className="flex items-center gap-4 border-l border-white/10 pl-4">
               <NavLink
@@ -106,13 +102,18 @@ export const Navbar = () => {
               </button>
             </div>
           ) : (
-            <Link
-              to="/login"
-              className="inline-flex items-center gap-2 rounded-xl border border-blue-500/25 bg-blue-500/10 px-4 py-2.5 text-sm font-bold text-white transition hover:border-blue-400/40 hover:bg-blue-500/20"
-            >
-              <UserCircle size={16} />
-              Sign In
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                to="/login"
+                className="inline-flex items-center gap-2 rounded-xl border border-blue-500/25 bg-blue-500/10 px-4 py-2.5 text-sm font-bold text-white transition hover:border-blue-400/40 hover:bg-blue-500/20"
+              >
+                <UserCircle size={16} />
+                Sign In
+              </Link>
+              <Link to="/signup" className="btn-primary">
+                Sign Up
+              </Link>
+            </div>
           )}
         </div>
 
@@ -152,7 +153,10 @@ export const Navbar = () => {
                 <button onClick={() => { logout(); setMobileOpen(false); }} className="rounded-xl border border-red-500/20 px-4 py-3 text-sm font-bold text-red-400">Sign Out</button>
               </>
             ) : (
-              <Link to="/login" onClick={() => setMobileOpen(false)} className="btn-primary text-center">Sign In</Link>
+              <>
+                <Link to="/login" onClick={() => setMobileOpen(false)} className="btn-outline text-center">Sign In</Link>
+                <Link to="/signup" onClick={() => setMobileOpen(false)} className="btn-primary text-center">Sign Up</Link>
+              </>
             )}
           </motion.div>
         )}

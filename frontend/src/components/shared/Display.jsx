@@ -1,7 +1,7 @@
 // src/components/shared/Display.jsx
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Fuel, Settings, Users, Star } from 'lucide-react';
+import { MapPin, Fuel, Settings, Users, Star } from './BootstrapIcons';
 
 export const CarCard = ({ car, searchDates }) => {
   const navigate = useNavigate();

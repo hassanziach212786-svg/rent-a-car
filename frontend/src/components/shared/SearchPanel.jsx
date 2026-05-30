@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, Search, X } from 'lucide-react';
+import { MapPin, Calendar, Search, X } from './BootstrapIcons';
 import API from '../../api/axios';
 import { toDateTimeLocalValue } from '../../utils/dateTime';
 
