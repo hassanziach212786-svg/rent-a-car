@@ -143,8 +143,8 @@ const ClassicHero = ({ onRent, onFleet }) => {
       />
       <div className="absolute bottom-0 left-1/2 h-44 w-[90%] -translate-x-1/2 rounded-full bg-black/85 blur-3xl" />
 
-      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-7xl items-center gap-10 lg:grid-cols-[0.86fr_1.14fr]">
-        <div className="relative z-30 max-w-2xl text-center lg:text-left">
+      <div className="relative z-10 mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-7xl items-center gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+        <div className="relative z-30 max-w-xl text-center lg:text-left">
           <motion.div
             {...fadeUp(0)}
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#d8b875]/28 bg-white/[0.045] px-4 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#d8b875] shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:text-xs"
@@ -157,8 +157,8 @@ const ClassicHero = ({ onRent, onFleet }) => {
             <p className="mb-4 text-[11px] font-black uppercase tracking-[0.28em] text-white/42">
               Luxury on demand
             </p>
-            <div className="relative min-h-[14.5rem] min-[420px]:min-h-[16.5rem] sm:min-h-[19rem] lg:min-h-[21rem] xl:min-h-[22rem]">
-              <h1 className="font-display text-5xl font-bold leading-[0.9] tracking-normal text-white drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)] min-[420px]:text-6xl sm:text-7xl lg:text-[6.2rem]">
+            <div className="relative min-h-[10.5rem] min-[420px]:min-h-[11.5rem] sm:min-h-[13rem] lg:min-h-[15.5rem] xl:min-h-[16.5rem]">
+              <h1 className="font-display text-[clamp(3.1rem,7vw,5.35rem)] font-bold leading-[0.92] tracking-normal text-white drop-shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
                 {typedText}
                 <motion.span
                   className="ml-1 inline-block h-[0.8em] w-[0.06em] translate-y-[0.08em] rounded-full bg-[#d8b875]"
@@ -171,7 +171,7 @@ const ClassicHero = ({ onRent, onFleet }) => {
 
           <motion.p
             {...fadeUp(0.72)}
-            className="mx-auto mt-6 max-w-xl text-base leading-8 text-white/66 sm:text-lg lg:mx-0"
+            className="mx-auto mt-4 max-w-xl text-base leading-8 text-white/66 sm:text-lg lg:mx-0"
           >
             Premium cars, clear availability, and a calm booking experience built
             for weddings, business trips, and city escapes.
@@ -198,7 +198,7 @@ const ClassicHero = ({ onRent, onFleet }) => {
           <div className="absolute left-[16%] right-[-4%] top-[49%] h-36 rounded-full bg-[#d8b875]/18 blur-[82px]" />
           <div className="absolute left-[26%] right-[4%] top-[73%] h-20 rounded-full bg-black/85 blur-3xl" />
           <motion.div
-            className="group relative z-10 ml-auto aspect-[3/2] w-full max-w-[850px] drop-shadow-[0_48px_100px_rgba(0,0,0,0.76)] lg:scale-110"
+            className="group relative z-10 ml-auto aspect-[3/2] w-full max-w-[760px] drop-shadow-[0_48px_100px_rgba(0,0,0,0.76)] xl:max-w-[820px]"
             initial={{ opacity: 0, x: 80, scale: 0.94 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             transition={{ duration: 0.95, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
