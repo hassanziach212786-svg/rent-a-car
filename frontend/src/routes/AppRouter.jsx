@@ -1,38 +1,39 @@
 import { Routes, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 import Home from '../pages/main/Home';
-// 1. IMPORT YOUR REAL COMPONENTS
-import Checkout from '../pages/main/Checkout'; 
+import Fleet from '../pages/main/Fleet';
+import Checkout from '../pages/main/Checkout';
 import BookingConfirm from '../pages/main/BookingConfirm';
+import AuthPages from '../pages/auth/AuthPages';
+import UserDashboard from '../pages/user/UserDashboard';
 import AdminDashboard from '../pages/admin/AdminDashboard';
-// Import other pages like Fleet, Login, etc.
+import Community from '../pages/main/Community';
+import InfoPage from '../pages/main/InfoPage';
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/* PUBLIC ROUTES */}
       <Route path="/" element={<Home />} />
-      <Route path="/cars" element={<div>Fleet Listing</div>} />
-      <Route path="/login" element={<div>Login Page</div>} />
-      <Route path="/signup" element={<div>Signup Page</div>} />
+      <Route path="/cars" element={<Fleet />} />
+      <Route path="/login" element={<AuthPages mode="login" />} />
+      <Route path="/signup" element={<AuthPages mode="signup" />} />
+      <Route path="/community" element={<Community />} />
+      <Route path="/about" element={<InfoPage slug="about" />} />
+      <Route path="/locations" element={<InfoPage slug="locations" />} />
+      <Route path="/contact" element={<InfoPage slug="contact" />} />
+      <Route path="/privacy" element={<InfoPage slug="privacy" />} />
+      <Route path="/terms" element={<InfoPage slug="terms" />} />
+      <Route path="/faqs" element={<InfoPage slug="faqs" />} />
 
-      {/* 2. ADD BOOKING CONFIRM (Step 1) */}
       <Route path="/book/:id" element={<BookingConfirm />} />
 
-      {/* PROTECTED USER ROUTES */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<div>User Dashboard Layout</div>}>
-          <Route index element={<div>My Bookings</div>} />
-        </Route>
-        
-        {/* 3. USE THE REAL CHECKOUT COMPONENT (Step 2) */}
+        <Route path="/dashboard/*" element={<UserDashboard />} />
         <Route path="/checkout" element={<Checkout />} />
       </Route>
 
-      {/* PROTECTED ADMIN ROUTES */}
       <Route element={<ProtectedRoute adminOnly={true} />}>
-        {/* 4. USE THE REAL ADMIN DASHBOARD */}
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/*" element={<AdminDashboard />} />
       </Route>
     </Routes>
   );

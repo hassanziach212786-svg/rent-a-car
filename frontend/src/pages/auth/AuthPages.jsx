@@ -348,7 +348,7 @@ const AuthPages = ({mode='login'}) => {
 
                 {isLogin && (
                   <div className="text-right -mt-1">
-                    <Link to="/forgot-password" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
+                    <Link to="/contact" className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
                       Forgot password?
                     </Link>
                   </div>
@@ -369,8 +369,8 @@ const AuthPages = ({mode='login'}) => {
               {!isLogin && (
                 <p className="text-center text-xs text-gray-700 mt-4">
                   By registering you agree to our{' '}
-                  <a href="#" className="text-blue-400 hover:underline">Terms</a> and{' '}
-                  <a href="#" className="text-blue-400 hover:underline">Privacy Policy</a>
+                  <Link to="/terms" className="text-blue-400 hover:underline">Terms</Link> and{' '}
+                  <Link to="/privacy" className="text-blue-400 hover:underline">Privacy Policy</Link>
                 </p>
               )}
 

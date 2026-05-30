@@ -19,6 +19,7 @@ import UserDashboard from './pages/user/UserDashboard';
 import ReviewPage from './pages/user/ReviewPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Community from './pages/main/Community';
+import InfoPage from './pages/main/InfoPage';
 
 // Helper to reset scroll on page change
 const ScrollToTop = () => {
@@ -52,8 +53,14 @@ function App() {
               <Route path="/cars" element={<Fleet />} />
               <Route path="/cars/:id" element={<CarDetails />} />
               <Route path="/login" element={<AuthPages mode="login" />} />
-<Route path="/signup" element={<AuthPages mode="signup" />} />
+              <Route path="/signup" element={<AuthPages mode="signup" />} />
               <Route path="/community" element={<Community />} />
+              <Route path="/about" element={<InfoPage slug="about" />} />
+              <Route path="/locations" element={<InfoPage slug="locations" />} />
+              <Route path="/contact" element={<InfoPage slug="contact" />} />
+              <Route path="/privacy" element={<InfoPage slug="privacy" />} />
+              <Route path="/terms" element={<InfoPage slug="terms" />} />
+              <Route path="/faqs" element={<InfoPage slug="faqs" />} />
 
               {/* Protected User Routes */}
               <Route element={<ProtectedRoute />}>
