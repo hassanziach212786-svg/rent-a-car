@@ -133,8 +133,8 @@ const Field = ({
   </div>
 );
 
-const AuthPages = () => {
-  const [isLogin, setIsLogin] = useState(true);
+const AuthPages = ({mode='login'}) => {
+  const [isLogin, setIsLogin] = useState(mode==='login');
   const [loading, setLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', confirm: '' });
@@ -177,10 +177,7 @@ const AuthPages = () => {
       if (isLogin) {
         const result = await login({ email: form.email.trim(), password: form.password });
         if (result.success) {
-          toast.success('Welcome back!');
           navigate(result.role === 'admin' ? '/admin' : '/dashboard');
-        } else {
-          toast.error(result.message);
         }
       } else {
         const result = await register({
@@ -191,10 +188,7 @@ const AuthPages = () => {
         });
 
         if (result.success) {
-          toast.success('Account created! Welcome');
           navigate('/dashboard');
-        } else {
-          toast.error(result.message);
         }
       }
     } finally {

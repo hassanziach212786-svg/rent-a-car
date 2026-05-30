@@ -51,7 +51,8 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/cars" element={<Fleet />} />
               <Route path="/cars/:id" element={<CarDetails />} />
-              <Route path="/login" element={<AuthPages />} />
+              <Route path="/login" element={<AuthPages mode="login" />} />
+<Route path="/signup" element={<AuthPages mode="signup" />} />
               <Route path="/community" element={<Community />} />
 
               {/* Protected User Routes */}

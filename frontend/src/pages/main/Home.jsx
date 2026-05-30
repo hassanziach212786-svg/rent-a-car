@@ -116,47 +116,42 @@ const Home = () => {
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#08090c] text-white">
-      <section className="relative min-h-[94vh] overflow-hidden bg-[#08090c]">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&q=88&w=2200"
-            alt="Black sports car on an aesthetic night road"
-            className="h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#050608]/95 via-[#08090c]/72 to-[#08090c]/20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-[#08090c]" />
-          <div className="absolute bottom-10 right-0 hidden h-56 w-1/2 bg-[#c9a96e]/10 blur-[110px] lg:block" />
-        </div>
+      <section className="relative min-h-[94vh] overflow-hidden bg-[#090a0d]">
+        <div className="absolute inset-0 bg-[linear-gradient(115deg,#08090c_0%,#101116_45%,#1c1711_100%)]" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d8b875]/45 to-transparent" />
+        <div className="absolute left-0 top-20 h-[32rem] w-[32rem] rounded-full bg-[#d8b875]/10 blur-[130px]" />
+        <div className="absolute bottom-0 right-0 h-[30rem] w-[34rem] rounded-full bg-[#64748b]/10 blur-[140px]" />
+        <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,.18)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.18)_1px,transparent_1px)] [background-size:72px_72px]" />
 
-        <div className="container relative z-10 mx-auto flex min-h-[94vh] items-center px-4 pb-24 pt-28 sm:px-6 sm:pb-28 sm:pt-32">
+        <div className="container relative z-10 mx-auto grid min-h-[94vh] items-center gap-12 px-4 pb-24 pt-28 sm:px-6 sm:pb-28 sm:pt-32 lg:grid-cols-[0.92fr_1.08fr]">
           <div className="max-w-3xl">
             <motion.div
               {...fadeUp(0)}
-              className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[#c9a96e]/25 bg-white/[0.06] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#c9a96e] backdrop-blur-md sm:text-[11px] sm:tracking-[0.18em]"
+              className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[#d8b875]/28 bg-white/[0.06] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.14em] text-[#d8b875] backdrop-blur-md sm:text-[11px] sm:tracking-[0.18em]"
             >
               <Sparkles size={13} />
-              Premium car rental experience
+              Classic premium car rental
             </motion.div>
 
             <motion.h1
               {...fadeUp(0.08)}
-              className="max-w-3xl text-4xl font-black leading-[1.04] text-white min-[380px]:text-5xl sm:text-6xl lg:text-7xl"
+              className="max-w-3xl font-display text-5xl font-bold leading-[0.98] text-white min-[380px]:text-6xl sm:text-7xl lg:text-8xl"
             >
-              Drive the city in quiet confidence.
+              Rent the right car for every journey.
             </motion.h1>
 
             <motion.p
               {...fadeUp(0.18)}
-              className="mt-6 max-w-2xl text-base leading-8 text-white/70 sm:text-lg"
+              className="mt-6 max-w-2xl text-base leading-8 text-white/68 sm:text-lg"
             >
-              A clean, premium rental platform for business trips, family plans,
-              airport pickups, and special occasions across Pakistan.
+              Book polished sedans, roomy SUVs, and premium rides with clear
+              availability, simple pricing, and a smooth pickup experience.
             </motion.p>
 
             <motion.div {...fadeUp(0.28)} className="mt-9 flex flex-col gap-3 sm:flex-row">
               <button
                 onClick={() => navigate('/cars')}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#c9a96e] px-7 py-4 text-sm font-extrabold uppercase tracking-[0.13em] text-[#08090c] shadow-[0_18px_50px_rgba(201,169,110,0.2)] transition hover:bg-[#d8bb83] active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#d8b875] px-7 py-4 text-sm font-extrabold uppercase tracking-[0.13em] text-[#08090c] shadow-[0_18px_50px_rgba(216,184,117,0.22)] transition hover:bg-[#ecd08f] active:scale-[0.98]"
               >
                 Browse cars
                 <ArrowRight size={16} />
@@ -172,12 +167,70 @@ const Home = () => {
             <motion.div {...fadeUp(0.38)} className="mt-10 flex flex-wrap gap-3 text-sm text-white/82">
               {['Instant availability', 'Insured rentals', 'Flexible city pickup'].map((item) => (
                 <span key={item} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/28 px-4 py-2 backdrop-blur-md">
-                  <CheckCircle size={14} className="text-[#c9a96e]" />
+                  <CheckCircle size={14} className="text-[#d8b875]" />
                   {item}
                 </span>
               ))}
             </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 28, scale: 0.98 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="relative hidden min-h-[560px] lg:block"
+          >
+            <div className="absolute left-[8%] top-[9%] h-[390px] w-[390px] rounded-full border border-[#d8b875]/18" />
+            <div className="absolute right-[4%] top-[3%] h-[460px] w-[460px] rounded-full border border-white/[0.07]" />
+            <div className="absolute left-[8%] right-[2%] top-[22%] h-[310px] -skew-y-6 rounded-[2rem] border border-white/[0.08] bg-white/[0.035] shadow-[0_40px_120px_rgba(0,0,0,0.38)] backdrop-blur-md" />
+            <motion.div
+              animate={{ backgroundPosition: ['0px 0px', '-180px 0px'] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'linear' }}
+              className="absolute bottom-[15%] left-[17%] right-[5%] h-24 -skew-y-3 rounded-full opacity-45 blur-[1px] [background-image:repeating-linear-gradient(90deg,transparent_0_34px,rgba(216,184,117,.34)_34px_72px,transparent_72px_118px)]"
+            />
+            <div className="absolute bottom-[11%] left-[12%] right-[8%] h-20 rounded-full bg-black/70 blur-3xl" />
+
+            <motion.img
+              animate={{ x: [0, 10, 0], y: [0, -5, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+              src="https://images.unsplash.com/photo-1555353540-64580b51c258?auto=format&fit=crop&q=88&w=1400"
+              alt="Premium rental car"
+              className="absolute right-[-4%] top-[18%] h-[360px] w-[88%] rounded-[1.75rem] object-cover shadow-[0_44px_90px_rgba(0,0,0,0.55)] [transform:perspective(1200px)_rotateY(-10deg)_rotateX(4deg)]"
+            />
+            <motion.div
+              animate={{ x: [0, 10, 0], y: [0, -5, 0] }}
+              transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute right-[-4%] top-[18%] h-[360px] w-[88%] rounded-[1.75rem] bg-gradient-to-tr from-black/55 via-transparent to-[#d8b875]/12 [transform:perspective(1200px)_rotateY(-10deg)_rotateX(4deg)]"
+            />
+
+            <div className="absolute left-0 top-[18%] w-44 rounded-2xl border border-white/10 bg-[#0c0d11]/86 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#d8b875]/14 text-[#d8b875]">
+                <ShieldCheck size={18} />
+              </div>
+              <p className="text-sm font-extrabold text-white">Verified fleet</p>
+              <p className="mt-1 text-xs leading-5 text-white/55">Clean, checked, and ready before pickup.</p>
+            </div>
+
+            <div className="absolute bottom-[14%] right-[1%] w-56 rounded-2xl border border-white/10 bg-[#0c0d11]/88 p-4 shadow-[0_18px_50px_rgba(0,0,0,0.36)] backdrop-blur-xl">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#d8b875]">Today</p>
+                  <p className="mt-1 text-lg font-black text-white">Ready to book</p>
+                </div>
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/[0.06] text-[#d8b875]">
+                  <CarFront size={20} />
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-[3%] left-[9%] grid w-[60%] grid-cols-3 gap-3">
+              {['Sedan', 'SUV', 'Premium'].map((type) => (
+                <div key={type} className="rounded-2xl border border-white/10 bg-white/[0.055] px-4 py-3 text-center backdrop-blur">
+                  <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-white/78">{type}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -317,52 +370,6 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="bg-[#0d0f14] px-4 py-16 sm:px-6 sm:py-24">
-        <div className="container mx-auto grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-center">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.07] bg-[#111318] shadow-[0_28px_80px_rgba(0,0,0,0.3)]">
-            <img
-              src="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&q=85&w=1200"
-              alt="Car prepared for a comfortable rental journey"
-              className="h-[320px] w-full object-cover sm:h-[420px]"
-            />
-            <div className="absolute bottom-4 left-4 right-4 rounded-[1.35rem] border border-white/10 bg-[#08090c]/86 p-4 shadow-xl backdrop-blur sm:bottom-5 sm:left-5 sm:right-5 sm:p-5">
-              <p className="text-sm font-extrabold uppercase tracking-[0.16em] text-[#c9a96e]">Why customers choose us</p>
-              <p className="mt-2 text-xl font-black text-white sm:text-2xl">Clean cars, clear rates, comfortable handoff.</p>
-            </div>
-          </div>
-
-          <div>
-            <motion.span {...fadeUpView} className="mb-4 inline-flex items-center gap-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#c9a96e]">
-              <Clock size={14} />
-              Rental confidence
-            </motion.span>
-            <motion.h2 {...fadeUpView} className="text-3xl font-black leading-tight text-white sm:text-4xl md:text-5xl">
-              Built for real trips, not just pretty photos.
-            </motion.h2>
-            <motion.p {...fadeUpView} className="mt-5 max-w-xl text-base leading-8 text-white/58">
-              The design now gives the page a real rental-service rhythm: search, compare,
-              trust, and move into booking without confusion.
-            </motion.p>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {perks.map((perk, index) => (
-                <motion.div
-                  key={perk.title}
-                  {...fadeUpView}
-                  transition={{ duration: 0.55, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
-                  className="rounded-[1.35rem] border border-white/[0.07] bg-[#151820] p-5"
-                >
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#c9a96e]/12 text-[#c9a96e]">
-                    {perk.icon}
-                  </div>
-                  <p className="font-extrabold text-white">{perk.title}</p>
-                  <p className="mt-2 text-sm leading-6 text-white/52">{perk.text}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="bg-[#08090c] px-4 py-16 sm:px-6 sm:py-24">
         <motion.div

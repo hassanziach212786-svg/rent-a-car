@@ -14,6 +14,7 @@ const AppRouter = () => {
       <Route path="/" element={<Home />} />
       <Route path="/cars" element={<div>Fleet Listing</div>} />
       <Route path="/login" element={<div>Login Page</div>} />
+      <Route path="/signup" element={<div>Signup Page</div>} />
 
       {/* 2. ADD BOOKING CONFIRM (Step 1) */}
       <Route path="/book/:id" element={<BookingConfirm />} />

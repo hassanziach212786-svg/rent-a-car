@@ -74,7 +74,10 @@ export const Navbar = () => {
               </>
             )}
           </NavLink>
-
+           
+<Link to="/signup" className="btn-primary">
+  Sign Up
+</Link>
           {user ? (
             <div className="flex items-center gap-4 border-l border-white/10 pl-4">
               <NavLink
