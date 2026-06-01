@@ -208,12 +208,16 @@ const ClassicHero = ({ onRent, onFleet }) => {
               alt="Luxury sports car"
               className="relative z-10 h-full w-full object-contain"
             />
-            <div className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <div className="absolute left-[2.5%] top-[55%] h-[7%] w-[10%] rotate-[25deg] rounded-full bg-white/95 blur-[3px] shadow-[0_0_18px_rgba(255,255,255,0.95),0_0_42px_rgba(216,184,117,0.82)]" />
-              <div className="absolute left-[47.5%] top-[55%] h-[8%] w-[21%] -rotate-[8deg] rounded-full bg-white/95 blur-[4px] shadow-[0_0_22px_rgba(255,255,255,0.98),0_0_58px_rgba(216,184,117,0.88)]" />
-              <div className="absolute left-[-3%] top-[51%] h-[18%] w-[28%] rotate-[10deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,255,255,0.5),rgba(216,184,117,0.24)_38%,transparent_72%)] blur-xl" />
-              <div className="absolute left-[45%] top-[49%] h-[18%] w-[36%] -rotate-[5deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,255,255,0.58),rgba(216,184,117,0.28)_42%,transparent_76%)] blur-xl" />
-            </div>
+            <motion.div
+              className="pointer-events-none absolute inset-0 z-20 opacity-90 transition-opacity duration-300 group-hover:opacity-100"
+              animate={{ opacity: [0.45, 1, 0.62, 1, 0.45] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.52, 1] }}
+            >
+              <div className="absolute left-[2.5%] top-[55%] h-[7%] w-[10%] rotate-[25deg] rounded-full bg-orange-300 blur-[3px] shadow-[0_0_18px_rgba(251,146,60,0.95),0_0_46px_rgba(249,115,22,0.86)]" />
+              <div className="absolute left-[47.5%] top-[55%] h-[8%] w-[21%] -rotate-[8deg] rounded-full bg-orange-300 blur-[4px] shadow-[0_0_22px_rgba(251,146,60,0.98),0_0_64px_rgba(249,115,22,0.9)]" />
+              <div className="absolute left-[-3%] top-[51%] h-[18%] w-[28%] rotate-[10deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,237,213,0.62),rgba(251,146,60,0.34)_38%,transparent_72%)] blur-xl" />
+              <div className="absolute left-[45%] top-[49%] h-[18%] w-[36%] -rotate-[5deg] rounded-full bg-[radial-gradient(ellipse_at_left,rgba(255,237,213,0.66),rgba(249,115,22,0.38)_42%,transparent_76%)] blur-xl" />
+            </motion.div>
           </motion.div>
 
           <motion.div
