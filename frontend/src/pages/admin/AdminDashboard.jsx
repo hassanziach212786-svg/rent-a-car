@@ -397,6 +397,7 @@ const AdminDashboard = () => {
     finally { setLoad('users', false); }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { fetchStats(); }, []);
 
   useEffect(() => {

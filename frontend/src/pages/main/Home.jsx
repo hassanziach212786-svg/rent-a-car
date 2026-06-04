@@ -5,13 +5,8 @@ import {
   ArrowRight,
   CalendarCheck,
   CarFront,
-  CreditCard,
-  Gauge,
-  Headphones,
   MapPin,
   Route,
-  ShieldCheck,
-  Sparkles,
   Star,
 } from '../../components/shared/BootstrapIcons';
 import { SearchPanel } from '../../components/shared/SearchPanel';
@@ -149,7 +144,6 @@ const ClassicHero = ({ onRent, onFleet }) => {
             {...fadeUp(0)}
             className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#d8b875]/28 bg-white/[0.045] px-4 py-2 text-[10px] font-black uppercase tracking-[0.22em] text-[#d8b875] shadow-[0_12px_40px_rgba(0,0,0,0.22)] backdrop-blur-xl sm:text-xs"
           >
-            <Sparkles size={14} />
             Classic premium rental
           </motion.div>
 

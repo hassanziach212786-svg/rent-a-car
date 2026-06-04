@@ -38,6 +38,14 @@ app.use(cookieParser());
 app.use(expressMongoSanitize()); // MOVED UP: Protects all routes below
 
 // 2. API ROUTES
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Rent-a-car API is healthy',
+    environment: process.env.NODE_ENV || 'development',
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/locations', locationRoutes);

@@ -113,7 +113,7 @@ const BookingConfirm = () => {
           <Link to={`/cars/${car._id}`} className="inline-flex items-center gap-2 text-gray-500 hover:text-white text-sm transition-colors group">
             <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to car
           </Link>
-          <span className="text-xs font-bold text-gray-600 uppercase tracking-widest">Step 1 of 2 — Booking details</span>
+          <span className="text-xs font-bold text-gray-600 uppercase tracking-widest">Step 1 of 2 - Booking details</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -134,7 +134,7 @@ const BookingConfirm = () => {
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-white font-bold">{car.brand} {car.model}</h3>
-                  <p className="text-gray-500 text-sm">{car.category} · {car.transmission} · {car.fuel_type}</p>
+                  <p className="text-gray-500 text-sm">{car.category} / {car.transmission} / {car.fuel_type}</p>
                   <p className="text-blue-400 text-sm font-semibold mt-1">Rs {baseRate.toLocaleString()}/day</p>
                 </div>
               </div>
@@ -178,7 +178,7 @@ const BookingConfirm = () => {
                 <option value="" disabled className="bg-[#16161a]">Select your hub</option>
                 {locations.length > 0 ? locations.map((loc) => (
                   <option key={loc._id} value={loc._id} className="bg-[#16161a]">
-                    {loc.name} — {loc.city}
+                    {loc.name} - {loc.city}
                   </option>
                 )) : (
                    <option className="bg-[#16161a]">Lahore Head Office</option>
@@ -215,7 +215,7 @@ const BookingConfirm = () => {
               <div className="space-y-3">
                 {[
                   { val: 'self',   label: 'No driver (self-drive)',      sub: 'You drive the vehicle yourself' },
-                  { val: 'driver', label: 'Professional driver',          sub: '+Rs 2,500/day — certified chauffeur' },
+                  { val: 'driver', label: 'Professional driver',          sub: '+Rs 2,500/day - certified chauffeur' },
                 ].map((opt) => (
                   <button
                     key={opt.val}
@@ -254,7 +254,7 @@ const BookingConfirm = () => {
                 to={`/cars/${car._id}`}
                 className="px-6 py-4 bg-white/5 hover:bg-white/10 text-gray-300 font-bold rounded-xl transition-all text-sm text-center border border-white/10"
               >
-                ← Back to car
+                Back to car
               </Link>
             </div>
           </div>
@@ -267,19 +267,19 @@ const BookingConfirm = () => {
               {rentalHours > 0 ? (
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Base rate × {rentalHours} hour{rentalHours !== 1 ? 's' : ''}</span>
+                    <span className="text-gray-500">Base rate x {rentalHours} hour{rentalHours !== 1 ? 's' : ''}</span>
                     <span className="text-white">Rs {(baseRate * billedDays).toLocaleString()}</span>
                   </div>
                   {hasDriver && (
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Driver × {rentalHours} hour{rentalHours !== 1 ? 's' : ''}</span>
+                      <span className="text-gray-500">Driver x {rentalHours} hour{rentalHours !== 1 ? 's' : ''}</span>
                       <span className="text-white">Rs {driverFee.toLocaleString()}</span>
                     </div>
                   )}
                   {dynamicAdj !== 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-500">Weekly discount</span>
-                      <span className="text-emerald-400">−Rs {Math.abs(dynamicAdj).toLocaleString()}</span>
+                      <span className="text-emerald-400">-Rs {Math.abs(dynamicAdj).toLocaleString()}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
