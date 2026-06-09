@@ -5,7 +5,7 @@ const IconBase = ({ size = 24, className = '', children, title, ...props }) => (
     height={size}
     fill="currentColor"
     viewBox="0 0 16 16"
-    className={className}
+    className={`inline-block shrink-0 ${className}`.trim()}
     aria-hidden={title ? undefined : 'true'}
     role={title ? 'img' : undefined}
     {...props}

@@ -643,14 +643,14 @@ const AdminDashboard = () => {
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => setModal({ type: 'car', mode: 'edit', data: car })}
-                        className="p-2 hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"
+                        className="inline-flex h-9 w-9 items-center justify-center hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"
                         title="Edit"
-                      ><Edit2 size={14} /></button>
+                      ><Edit2 size={17} /></button>
                       <button
                         onClick={() => handleDeleteCar(car._id)}
-                        className="p-2 hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"
+                        className="inline-flex h-9 w-9 items-center justify-center hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"
                         title="Delete"
-                      ><Trash2 size={14} /></button>
+                      ><Trash2 size={17} /></button>
                     </div>
                   </td>
                 </tr>
@@ -666,7 +666,7 @@ const AdminDashboard = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-lg font-bold text-white">Bookings <span className="text-[11px] text-gray-600 font-normal">({bookings.length})</span></h2>
-        <button onClick={fetchBookings} className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors" title="Refresh"><RefreshCw size={15} /></button>
+        <button onClick={fetchBookings} className="inline-flex h-9 w-9 items-center justify-center hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors" title="Refresh"><RefreshCw size={18} /></button>
       </div>
       <div className="bg-[#111114] border border-white/5 rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
@@ -696,15 +696,15 @@ const AdminDashboard = () => {
                   <td className="px-6 py-4"><Badge status={b.status} map={STATUS_BOOKING} /></td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => setModal({ type: 'booking', mode: 'view', data: b })} className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors" title="View"><Eye size={14} /></button>
+                      <button onClick={() => setModal({ type: 'booking', mode: 'view', data: b })} className="inline-flex h-9 w-9 items-center justify-center hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors" title="View"><Eye size={18} /></button>
                       {b.status === 'payment_submitted' && (
-                        <button onClick={() => handleBookingAction(b._id, 'confirmed')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500 hover:text-white transition-all" title="Confirm"><CheckCircle2 size={14}/></button>
+                        <button onClick={() => handleBookingAction(b._id, 'confirmed')} className="inline-flex h-9 w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500 hover:text-white transition-all" title="Confirm"><CheckCircle2 size={18}/></button>
                       )}
                       {b.status === 'confirmed' && (
-                        <button onClick={() => handleBookingAction(b._id, 'completed')} className="p-2 bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500 hover:text-white transition-all" title="Mark Completed"><Flag size={14}/></button>
+                        <button onClick={() => handleBookingAction(b._id, 'completed')} className="inline-flex h-9 w-9 items-center justify-center bg-purple-500/10 text-purple-400 rounded-lg hover:bg-purple-500 hover:text-white transition-all" title="Mark Completed"><Flag size={18}/></button>
                       )}
                       {b.status !== 'cancelled' && b.status !== 'completed' && (
-                        <button onClick={() => handleBookingAction(b._id, 'cancelled')} className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all" title="Cancel"><XCircle size={14}/></button>
+                        <button onClick={() => handleBookingAction(b._id, 'cancelled')} className="inline-flex h-9 w-9 items-center justify-center bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all" title="Cancel"><XCircle size={18}/></button>
                       )}
                     </div>
                   </td>
@@ -721,7 +721,7 @@ const AdminDashboard = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-lg font-bold text-white">Payments <span className="text-[11px] text-gray-600 font-normal">({payments.length})</span></h2>
-        <button onClick={fetchPayments} className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors"><RefreshCw size={15} /></button>
+        <button onClick={fetchPayments} className="inline-flex h-9 w-9 items-center justify-center hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors"><RefreshCw size={18} /></button>
       </div>
       <div className="bg-[#111114] border border-white/5 rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
@@ -758,8 +758,8 @@ const AdminDashboard = () => {
                     <div className="flex items-center justify-end gap-1">
                       {p.status === 'pending' && (
                         <>
-                          <button onClick={() => handlePaymentAction(p._id, 'approve')} className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500 hover:text-white transition-all" title="Approve"><CheckCircle2 size={14}/></button>
-                          <button onClick={() => handlePaymentAction(p._id, 'reject')} className="p-2 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all" title="Reject"><XCircle size={14}/></button>
+                          <button onClick={() => handlePaymentAction(p._id, 'approve')} className="inline-flex h-9 w-9 items-center justify-center bg-emerald-500/10 text-emerald-400 rounded-lg hover:bg-emerald-500 hover:text-white transition-all" title="Approve"><CheckCircle2 size={18}/></button>
+                          <button onClick={() => handlePaymentAction(p._id, 'reject')} className="inline-flex h-9 w-9 items-center justify-center bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition-all" title="Reject"><XCircle size={18}/></button>
                         </>
                       )}
                     </div>
@@ -822,8 +822,8 @@ const AdminDashboard = () => {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => setModal({ type: 'driver', mode: 'edit', data: d })} className="p-2 hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"><Edit2 size={14}/></button>
-                      <button onClick={() => handleDeleteDriver(d._id)} className="p-2 hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={14}/></button>
+                      <button onClick={() => setModal({ type: 'driver', mode: 'edit', data: d })} className="inline-flex h-9 w-9 items-center justify-center hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"><Edit2 size={17}/></button>
+                      <button onClick={() => handleDeleteDriver(d._id)} className="inline-flex h-9 w-9 items-center justify-center hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={17}/></button>
                     </div>
                   </td>
                 </tr>
@@ -882,8 +882,8 @@ const AdminDashboard = () => {
                   <td className="px-6 py-4 text-xs text-gray-600 max-w-[200px] truncate">{l.address || '—'}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
-                      <button onClick={() => setModal({ type: 'location', mode: 'edit', data: l })} className="p-2 hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"><Edit2 size={14}/></button>
-                      <button onClick={() => handleDeleteLocation(l._id)} className="p-2 hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={14}/></button>
+                      <button onClick={() => setModal({ type: 'location', mode: 'edit', data: l })} className="inline-flex h-9 w-9 items-center justify-center hover:bg-blue-500/10 rounded-lg text-gray-500 hover:text-blue-400 transition-colors"><Edit2 size={17}/></button>
+                      <button onClick={() => handleDeleteLocation(l._id)} className="inline-flex h-9 w-9 items-center justify-center hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={17}/></button>
                     </div>
                   </td>
                 </tr>
@@ -899,7 +899,7 @@ const AdminDashboard = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-lg font-bold text-white">Users <span className="text-[11px] text-gray-600 font-normal">({users.length})</span></h2>
-        <button onClick={fetchUsers} className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors"><RefreshCw size={15} /></button>
+        <button onClick={fetchUsers} className="inline-flex h-9 w-9 items-center justify-center hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-colors"><RefreshCw size={18} /></button>
       </div>
       <div className="bg-[#111114] border border-white/5 rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
@@ -935,7 +935,7 @@ const AdminDashboard = () => {
                   <td className="px-6 py-4 text-[11px] text-gray-600 font-mono">{fmt(u.createdAt)}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end">
-                      <button onClick={() => handleDeleteUser(u._id)} className="p-2 hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={14}/></button>
+                      <button onClick={() => handleDeleteUser(u._id)} className="inline-flex h-9 w-9 items-center justify-center hover:bg-red-500/10 rounded-lg text-gray-500 hover:text-red-400 transition-colors"><Trash2 size={17}/></button>
                     </div>
                   </td>
                 </tr>
@@ -1023,7 +1023,7 @@ const AdminDashboard = () => {
                   : 'text-gray-500 hover:bg-white/[0.05] hover:text-white'
               }`}
             >
-              <item.Icon size={16} /> {item.label}
+              <item.Icon size={20} /> {item.label}
             </button>
           ))}
         </nav>
@@ -1031,7 +1031,7 @@ const AdminDashboard = () => {
           onClick={logout}
           className="mt-4 flex items-center gap-3 rounded-xl px-3.5 py-3 text-xs font-bold uppercase tracking-wider text-red-400 transition-all hover:bg-red-500/10"
         >
-          <LogOut size={16} /> Logout
+          <LogOut size={20} /> Logout
         </button>
       </aside>
 
@@ -1058,7 +1058,7 @@ const AdminDashboard = () => {
               }}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2 text-xs font-bold text-gray-300 transition hover:border-white/20 hover:text-white"
             >
-              <RefreshCw size={14} className={loading.stats ? 'animate-spin' : ''} />
+              <RefreshCw size={17} className={loading.stats ? 'animate-spin' : ''} />
               Refresh
             </button>
           </div>
@@ -1076,7 +1076,7 @@ const AdminDashboard = () => {
                     : 'bg-white/[0.04] text-gray-500 hover:text-white'
                 }`}
               >
-                <item.Icon size={14} /> {item.label}
+                <item.Icon size={18} /> {item.label}
               </button>
             ))}
           </div>
